@@ -5,6 +5,8 @@ EditorHelper.addPlugin( "image", function( trackEvent ) {
   var _popcornOptions = trackEvent.popcornTrackEvent,
       _container = _popcornOptions._container,
       _clone,
+      _draggable,
+      _cloneContainer,
       _target = _popcornOptions._target;
 
   if ( window.jQuery ) {
@@ -14,8 +16,8 @@ EditorHelper.addPlugin( "image", function( trackEvent ) {
     }
 
     window.EditorHelper.selectable( trackEvent, _container );
-    window.EditorHelper.draggable( trackEvent, _container, _target, {
-      tooltip: "Drag an image from your desktop"
+    trackEvent.draggable = window.EditorHelper.draggable( trackEvent, _container, _target, {
+      tooltip: "Double click to crop image"
     });
     window.EditorHelper.resizable( trackEvent, _container, _target, {
       minWidth: 5,
@@ -24,15 +26,45 @@ EditorHelper.addPlugin( "image", function( trackEvent ) {
     });
 
     if ( trackEvent.popcornTrackEvent.image ) {
+      _cloneContainer = document.createElement( "div" );
+      _cloneContainer.classList.add( "clone-container" );
       _clone = trackEvent.popcornTrackEvent.image.cloneNode();
-      $( trackEvent.popcornTrackEvent.image ).draggable({
-        handle: ".ui-draggable-handle",
-        containment: "window"
+      _clone.classList.add( "image-crop-clone" );
+      _cloneContainer.appendChild( _clone );
+      _container.appendChild( _cloneContainer );
+
+      $( _cloneContainer ).draggable({
+        drag: function( event, ui ) {
+          trackEvent.popcornTrackEvent.image.style.marginTop = ui.position.top  + trackEvent.popcornTrackEvent.margintop + "px";
+          trackEvent.popcornTrackEvent.image.style.marginLeft = ui.position.left  + trackEvent.popcornTrackEvent.marginleft + "px";
+        },
+        stop: function( event, ui ) {
+          //var top = ui.position.top / trackEvent.popcornTrackEvent.image.offsetHeight * 100,
+          //    left = ui.position.left / trackEvent.popcornTrackEvent.image.offsetWidth * 100;
+
+          trackEvent.update({
+            margintop: ui.position.top + trackEvent.popcornTrackEvent.margintop,
+            marginleft: ui.position.left + trackEvent.popcornTrackEvent.marginleft
+          });
+          trackEvent.draggable.edit();
+        }
       });
-      _container.insertNode( _container.childNodes[ 0 ], _clone );
-      $( _clone ).draggable({
-        handle: ".ui-draggable-handle",
-        containment: "window"
+
+      $( _cloneContainer ).resizable({
+        handles: "e, s, se",
+        resize: function( event, ui ) {
+          trackEvent.popcornTrackEvent.image.style.height = ui.size.height - trackEvent.popcornTrackEvent.margintop + "px";
+          trackEvent.popcornTrackEvent.image.style.width = ui.size.width - trackEvent.popcornTrackEvent.marginleft + "px";
+          _clone.style.height = ui.size.height - trackEvent.popcornTrackEvent.margintop + "px";
+          _clone.style.width = ui.size.width - trackEvent.popcornTrackEvent.marginleft + "px";
+        },
+        stop: function( event, ui ) {
+          trackEvent.update({
+            innerheight: ui.size.height - trackEvent.popcornTrackEvent.margintop,
+            innerwidth: ui.size.width - trackEvent.popcornTrackEvent.marginleft
+          });
+          trackEvent.draggable.edit();
+        }
       });
     }
   }

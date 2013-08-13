@@ -1,6 +1,9 @@
 .image-plugin-container {
   position: absolute;
 }
+.image-plugin-container.track-event-editing .clone-container {
+  display: inline-block;
+}
 
 .image-plugin-link {
   position: absolute;
@@ -15,8 +18,6 @@
 
 .image-plugin-img {
   border-style: none;
-  width: 100%;
-  height: 100%;
   background-position: center center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -24,4 +25,15 @@
 
 .image-plugin-hidden {
   visibility: hidden;
+}
+
+.image-crop-clone {
+  opacity: 0.5;
+  border: 1px solid black;
+  margin: -1px;
+}
+
+.clone-container {
+  display: none;
+  cursor: pointer;
 }

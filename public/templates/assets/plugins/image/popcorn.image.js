@@ -86,10 +86,13 @@
 
   function createImageDiv( imageUrl, linkUrl, instance ) {
     var div = document.createElement( "div" ),
+        image = document.createElement( "img" ),
         link = document.createElement( "a" );
 
-    div.style.backgroundImage = "url( \"" + imageUrl + "\" )";
-    div.classList.add( "image-plugin-img" );
+    //div.style.backgroundImage = "url( \"" + imageUrl + "\" )";
+    image.src = imageUrl;
+    //div.appendChild( image );
+    image.classList.add( "image-plugin-img" );
 
     if ( linkUrl ) {
       link.setAttribute( "href", linkUrl );
@@ -101,7 +104,7 @@
     link.setAttribute( "target", "_blank" );
     link.classList.add( "image-plugin-link" );
 
-    link.appendChild( div );
+    link.appendChild( image );
     return link;
   }
 
@@ -173,10 +176,14 @@
             _container.appendChild( _link );
           }
           _image = _link.querySelector( ".image-plugin-img" );
-          _image.style.marginLeft = validateDimension( options.marginleft, "0" ) + "%";
-          _image.style.marginRight = validateDimension( options.marginright, "0" ) + "%";
-          _image.style.marginTop = validateDimension( options.margintop, "0" ) + "%";
-          _image.style.marginBottom = validateDimension( options.marginbottom, "0" ) + "%";
+          _image.style.marginLeft = validateDimension( options.marginleft, "0" ) + "px";
+          _image.style.marginTop = validateDimension( options.margintop, "0" ) + "px";
+          if ( options.innerheight ) {
+            _image.style.height = validateDimension( options.innerheight, "0" ) + "px";
+          }
+          if ( options.innerwidth ) {
+            _image.style.width = validateDimension( options.innerwidth, "0" ) + "px";
+          }
           options.link = _link;
           options.image = _image;
         } else {
@@ -386,7 +393,6 @@
         margintop: {
           elem: "input",
           type: "number",
-          label: "Top",
           "default": 0,
           "units": "%",
           hidden: true
@@ -394,23 +400,20 @@
         marginleft: {
           elem: "input",
           type: "number",
-          label: "Left",
           "default": 0,
           "units": "%",
           hidden: true
         },
-        marginbottom: {
+        innerwidth: {
           elem: "input",
           type: "number",
-          label: "Top",
           "default": 0,
           "units": "%",
           hidden: true
         },
-        marginright: {
+        innerheight: {
           elem: "input",
           type: "number",
-          label: "Left",
           "default": 0,
           "units": "%",
           hidden: true
