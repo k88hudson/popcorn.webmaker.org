@@ -112,6 +112,8 @@
       var _target,
           _container,
           _flickrCallback,
+          _link,
+          _image,
           _this = this;
 
       options._target = _target = Popcorn.dom.find( options.target );
@@ -160,15 +162,23 @@
 
                 // Unfortunately not all requests contain an "Original" size option
                 // so I'm always taking the second last one. This has it's upsides and downsides
-                _container.appendChild( createImageDiv( data.sizes.size[ data.sizes.size.length - 2 ].source, options.linkSrc, _this ) );
+                _link = createImageDiv( data.sizes.size[ data.sizes.size.length - 2 ].source, options.linkSrc, _this );
+                _container.appendChild( _link );
               }
             };
 
             Popcorn.getJSONP( uri, _flickrStaticImage );
           } else {
-            _container.appendChild( createImageDiv( options.src, options.linkSrc, _this ) );
+            _link = createImageDiv( options.src, options.linkSrc, _this );
+            _container.appendChild( _link );
           }
-
+          _image = _link.querySelector( ".image-plugin-img" );
+          _image.style.marginLeft = validateDimension( options.marginleft, "0" ) + "%";
+          _image.style.marginRight = validateDimension( options.marginright, "0" ) + "%";
+          _image.style.marginTop = validateDimension( options.margintop, "0" ) + "%";
+          _image.style.marginBottom = validateDimension( options.marginbottom, "0" ) + "%";
+          options.link = _link;
+          options.image = _image;
         } else {
 
           _flickrCallback = function( data ) {
@@ -178,7 +188,6 @@
                 _inOuts,
                 _lastVisible,
                 _url,
-                _link,
                 _tagRefs = [],
                 _count = options.count || _photos.length;
 
@@ -371,6 +380,38 @@
           type: "number",
           label: "Left",
           "default": 10,
+          "units": "%",
+          hidden: true
+        },
+        margintop: {
+          elem: "input",
+          type: "number",
+          label: "Top",
+          "default": 0,
+          "units": "%",
+          hidden: true
+        },
+        marginleft: {
+          elem: "input",
+          type: "number",
+          label: "Left",
+          "default": 0,
+          "units": "%",
+          hidden: true
+        },
+        marginbottom: {
+          elem: "input",
+          type: "number",
+          label: "Top",
+          "default": 0,
+          "units": "%",
+          hidden: true
+        },
+        marginright: {
+          elem: "input",
+          type: "number",
+          label: "Left",
+          "default": 0,
           "units": "%",
           hidden: true
         },
