@@ -33,7 +33,7 @@ EditorHelper.addPlugin( "image", function( trackEvent ) {
       _cloneContainer.appendChild( _clone );
       _container.appendChild( _cloneContainer );
 
-      $( _cloneContainer ).draggable({
+      $( _clone ).draggable({
         drag: function( event, ui ) {
           trackEvent.popcornTrackEvent.image.style.marginTop = ui.position.top  + trackEvent.popcornTrackEvent.margintop + "px";
           trackEvent.popcornTrackEvent.image.style.marginLeft = ui.position.left  + trackEvent.popcornTrackEvent.marginleft + "px";
@@ -50,8 +50,8 @@ EditorHelper.addPlugin( "image", function( trackEvent ) {
         }
       });
 
-      $( _cloneContainer ).resizable({
-        handles: "e, s, se",
+      $( _clone ).resizable({
+        handles: "n, ne, e, se, s, sw, w, nw",
         resize: function( event, ui ) {
           trackEvent.popcornTrackEvent.image.style.height = ui.size.height - trackEvent.popcornTrackEvent.margintop + "px";
           trackEvent.popcornTrackEvent.image.style.width = ui.size.width - trackEvent.popcornTrackEvent.marginleft + "px";

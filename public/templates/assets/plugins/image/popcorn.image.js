@@ -86,11 +86,11 @@
 
   function createImageDiv( imageUrl, linkUrl, instance ) {
     var div = document.createElement( "div" ),
-        image = document.createElement( "img" ),
+        image = document.createElement( "div" ),
         link = document.createElement( "a" );
 
-    //div.style.backgroundImage = "url( \"" + imageUrl + "\" )";
-    image.src = imageUrl;
+    image.style.backgroundImage = "url( \"" + imageUrl + "\" )";
+    //image.src = imageUrl;
     //div.appendChild( image );
     image.classList.add( "image-plugin-img" );
 
