@@ -78,6 +78,7 @@ EditorHelper.addPlugin( "image", function( trackEvent ) {
             left: left,
             top: top
           });
+          console.log(image.offsetWidth, _container.clientWidth);
         }
       }
     });
