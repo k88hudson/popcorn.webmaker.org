@@ -35,6 +35,7 @@
 .image-crop-clone {
   opacity: 0.5;
   outline: 1px solid black;
+  background-color: white;
 }
 
 .clone-container {

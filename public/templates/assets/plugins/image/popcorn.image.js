@@ -90,8 +90,6 @@
         link = document.createElement( "a" );
 
     image.style.backgroundImage = "url( \"" + imageUrl + "\" )";
-    //image.src = imageUrl;
-    //div.appendChild( image );
     image.classList.add( "image-plugin-img" );
 
     if ( linkUrl ) {
@@ -176,13 +174,13 @@
             _container.appendChild( _link );
           }
           _image = _link.querySelector( ".image-plugin-img" );
-          _image.style.marginLeft = validateDimension( options.marginleft, "0" ) + "px";
-          _image.style.marginTop = validateDimension( options.margintop, "0" ) + "px";
+          _image.style.left = validateDimension( options.innerleft, "0" ) + "%";
+          _image.style.top = validateDimension( options.innertop, "0" ) + "%";
           if ( options.innerheight ) {
-            _image.style.height = validateDimension( options.innerheight, "0" ) + "px";
+            _image.style.height = validateDimension( options.innerheight, "0" ) + "%";
           }
           if ( options.innerwidth ) {
-            _image.style.width = validateDimension( options.innerwidth, "0" ) + "px";
+            _image.style.width = validateDimension( options.innerwidth, "0" ) + "%";
           }
           options.link = _link;
           options.image = _image;
@@ -329,7 +327,7 @@
           elem: "input",
           type: "url",
           label: "Source URL",
-          "default": "https://popcorn.webmaker.org/resources/popcorn-logo.svg"
+          "default": "http://www.9ori.com/blog/media/images/bfa6d9f630.jpg"
         },
         linkSrc: {
           elem: "input",
@@ -362,7 +360,7 @@
           elem: "input",
           type: "number",
           label: "Width",
-          "default": 80,
+          "default": 100,
           "units": "%",
           hidden: true
         },
@@ -370,7 +368,7 @@
           elem: "input",
           type: "number",
           label: "Height",
-          "default": 80,
+          "default": 100,
           "units": "%",
           hidden: true
         },
@@ -378,7 +376,7 @@
           elem: "input",
           type: "number",
           label: "Top",
-          "default": 10,
+          "default": 0,
           "units": "%",
           hidden: true
         },
@@ -386,18 +384,18 @@
           elem: "input",
           type: "number",
           label: "Left",
-          "default": 10,
+          "default": 0,
           "units": "%",
           hidden: true
         },
-        margintop: {
+        innertop: {
           elem: "input",
           type: "number",
           "default": 0,
           "units": "%",
           hidden: true
         },
-        marginleft: {
+        innerleft: {
           elem: "input",
           type: "number",
           "default": 0,
